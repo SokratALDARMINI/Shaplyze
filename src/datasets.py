@@ -517,7 +517,7 @@ def CensusIncomeKDD_updated(n_samples=10000, parameters=[], seed=0):
     return data, all_features, sensitive_attribute, output, bins, ['education', 'marital_stat', 'race']
 
 
-def adult_data_updated2(n_samples=10000, parameters = [], seed=0, quantization_type = 0):
+def adult_data_updated(n_samples=10000, parameters = [], seed=0):
     # ['age', 'educational-num', 'capital-gain', 'capital-loss', 'hours-per-week', 'relationship']
     # max [10, 10, 10, 10, 10, 6]
 
@@ -586,28 +586,20 @@ def adult_data_updated2(n_samples=10000, parameters = [], seed=0, quantization_t
 
 
     # apply bining to ['age', 'educational-num', 'capital-gain', 'capital-loss', 'hours-per-week', 'relationship']
-    if quantization_type == 0:
-        dataframe['age'] = pd.cut(dataframe['age'], bins=parameters[0], labels=False)
-    else:
-        dataframe['age'] = pd.qcut(dataframe['age'], q=parameters[0], labels=False)
-    if quantization_type == 0:
-        dataframe['educational-num'] = pd.cut(dataframe['educational-num'], bins=parameters[1], labels=False)
-    else:
-        dataframe['educational-num'] = pd.qcut(dataframe['educational-num'], q=parameters[1], labels=False)
-    dataframe['capital-gain'] = pd.cut(dataframe['capital-gain'], bins=parameters[2], labels=False)
-    dataframe['capital-loss'] = pd.cut(dataframe['capital-loss'], bins=parameters[3], labels=False)
-    if quantization_type == 0:
-        dataframe['hours-per-week'] = pd.cut(dataframe['hours-per-week'], bins=parameters[4], labels=False)
-    else:
-        dataframe['hours-per-week'] = pd.qcut(dataframe['hours-per-week'], q=parameters[4], labels=False)
-    dataframe['relationship'] = pd.cut(dataframe['relationship'], bins=parameters[5], labels=False)
+    dataframe['age'] = pd.qcut(dataframe['age'], q=10, labels=False)
+    dataframe['educational-num'] = pd.cut(dataframe['educational-num'], bins=10, labels=False)
+    dataframe['capital-gain'] = pd.cut(dataframe['capital-gain'], bins=[-1, 500, 100000], labels=False)
+    dataframe['capital-loss'] = pd.cut(dataframe['capital-loss'], bins=[-1, 1000, 1000000], labels=False)
+    dataframe['hours-per-week'] = pd.cut(dataframe['hours-per-week'], bins=10, labels=False)
+    # dataframe['relationship'] = pd.cut(dataframe['relationship'], bins=parameters[5], labels=False)
 
     features = ['age', 'educational-num', 'capital-gain', 'capital-loss', 'hours-per-week', 'relationship']
-    bins = (parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], 2, 2)
+    bins = (dataframe['age'].nunique(), dataframe['educational-num'].nunique(), dataframe['capital-gain'].nunique(),
+            dataframe['capital-loss'].nunique(), dataframe['hours-per-week'].nunique(), dataframe['relationship'].nunique(), 2, 2)
     output = [general_target]
     sensitive_attribute = [sensitive_attribute]
 
-    return dataframe, features, sensitive_attribute, output, bins
+    return dataframe, features, sensitive_attribute, output, bins, ['relationship']
 
 def Heritage_updated(n_samples=10000, parameters=[], seed=0):
     # Load your claims dataset
