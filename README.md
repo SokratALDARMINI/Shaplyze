@@ -2,6 +2,8 @@
 
 We recommend using a virtual environment with [Conda](https://docs.conda.io) or `venv`.
 
+Note: This project is licensed under the Apache 2.0 License
+
 ### ✅ 1. Create and activate environment
 ```bash
 conda create -n shaplyze python=3.11
