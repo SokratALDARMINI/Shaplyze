@@ -165,3 +165,28 @@ To run the full benchmarking pipeline for any dataset, use:
 python benchmarking.py --dataset <id>
 ```
 where `<id>` is the index (0 to 6) corresponding to a specific dataset in the script.
+
+
+
+
+## 📚 References
+
+This toolkit incorporates and extends the BROJA-2PID estimator for Partial Information Decomposition (PID), as implemented in the [`dit`](https://github.com/dit/dit) library. In particular, we follow the cone programming formulation described by Makkeh et al., and implement an upgrade mentioned by the original authors: we support the **MOSEK** solver in addition to the default **ECOS** solver, enabling improved performance and numerical stability for certain PID tasks.
+
+We acknowledge the following foundational works:
+
+- A. Makkeh, D.O. Theis, and R. Vicente,  
+  **BROJA-2PID: A robust estimator for Bertschinger et al.'s bivariate partial information decomposition**,  
+  *Entropy*, 20(4), 271, 2018.  
+  [https://doi.org/10.3390/e20040271](https://doi.org/10.3390/e20040271)
+
+- A. Makkeh, D.O. Theis, and R. Vicente,  
+  **Bivariate Partial Information Decomposition: The Optimization Perspective**,  
+  *Entropy*, 19(10), 530, 2017.  
+  [https://doi.org/10.3390/e19100530](https://doi.org/10.3390/e19100530)
+
+- Abdullah Makkeh,  
+  **Applications of Optimization in Some Complex Systems**,  
+  Ph.D. Thesis, University of Tartu, 2018.
+
+If you use our implementation or build upon this MOSEK-enabled extension, please cite the original authors appropriately.
