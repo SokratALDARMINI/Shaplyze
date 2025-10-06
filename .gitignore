@@ -1,0 +1,8 @@
+data/
+datasets/
+results/
+logs/
+dictionary_res/
+subsets_MMD/
+accuracy_results/
+.idea/
